@@ -1,4 +1,8 @@
 import React from 'react'
+import axios from 'axios';
+import AddNewCategory from './AddNewCategory';
+import EditCategory from './EditCategory';
+
 
 class Category extends React.Component {
     constructor(props) {
@@ -10,57 +14,68 @@ class Category extends React.Component {
     }
     //http://localhost:4000/api/flowers
     componentDidMount() {
-        fetch("http://localhost:4000/api/flowers")
-            .then((res) => res.json())
-            .then((json) => {
+        const getAllCategory = async () => {
+            try {
+                const res = await axios.get("http://localhost:4000/api/category")
                 this.setState({
-                    items: json,
+                    item: res.data,
                     DataisLoaded: true
-                });
-            })
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getAllCategory()
+    }
+    deleteCategory(id, name) {
+        const deleteById = async (categoryID) => {
+            try {
+                await axios.delete("http://localhost:4000/api/category/" + categoryID)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        if (window.confirm("Bạn có muốn xóa loại hoa: " + name)) {
+            deleteById(id)
+            window.location.reload(false)
+        };
     }
     render() {
-        const { DataisLoaded, items } = this.state;
-        if (!DataisLoaded) return <div>
-            <h1> Pleses wait some time.... </h1> </div>;
+        const { DataisLoaded, item } = this.state;
+        if (!DataisLoaded) return (<div><h1> Pleses wait some time.... </h1> </div>);
         return (
             <React.Fragment>
                 <div className="alert alert-info mt-3">
                     <strong>Danh sách loại hoa</strong>
                 </div><div className="row">
                     <div className="col-xs-12">
-                        <a href="/AddNewCategory" classNameName="">Thêm loại hoa</a>
-
+                        <AddNewCategory />
                     </div>
                 </div><br /><div className="table-responsive-md">
                     <table className="table table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">Mã loại hoa</th>
-                                <th scope="col">Tên loại hoa</th>
-                                <th scope="col">Color</th>
-                                <th scope="col">Price</th>
-                                <th scope="col"></th>
+                                <th>Mã loại hoa</th>
+                                <th>Tên loại hoa</th>
+                                <th></th>
                             </tr>
-                        </thead>{
-                            items.map((item) => (
-                                <tbody key={item.flower_id}>
-                                    <tr>
-                                        <td scope="row">{item.FlowerID}</td>
-                                        <td scope="row">{item.FlowerName}</td>
-                                        <td scope="row">{item.Color}</td>
-                                        <td scope="row">{item.Price}</td>
-                                        <td scope="row">
-                                            <button type="button" className="btn btn-primary"><i className="far fa-eye"></i></button>
-                                            <button type="button" className="btn btn-success"><i className="fas fa-edit"></i></button>
-                                            <button type="button" className="btn btn-danger"><i className="far fa-trash-alt"></i></button>
-                                        </td>
-                                    </tr>
+                        </thead>
+                        <tbody>
+                            {item.map(data => (
 
-                                </tbody>
+                                <tr key={data.CategoryID}>
+                                    <td>{data.CategoryID}</td>
+                                    <td>{data.CategoryName}</td>
+                                    <td >
+                                        <button type="button" className="btn btn-primary"><i className="far fa-eye"></i></button>
+                                        {/* <button type="button" className="btn btn-success"><i className="fas fa-edit"></i></button> */}
+                                        <EditCategory categoryId={data.CategoryID} />
+                                        <button type="button" className="btn btn-danger" onClick={() => this.deleteCategory(data.CategoryID, data.CategoryName)}><i className="far fa-trash-alt"></i></button>
+                                    </td>
+                                </tr>
                             ))}
+                        </tbody>
                     </table>
-
                 </div>
             </React.Fragment >
         )
