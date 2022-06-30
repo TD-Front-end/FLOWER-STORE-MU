@@ -9,6 +9,7 @@ import PageNotFound from './PageNotFound';
 import Home from './Home';
 import Navbar from 'react-bootstrap/Navbar';
 import { Container } from 'react-bootstrap';
+import Supplier from './Supplier/Supplier';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
               <Route path="/" element={<Header />} />
               <Route path="/category" element={<Category />} />
               <Route path="/flower" element={<Flowers />} />
+              <Route path='/supplier' element={<Supplier />} />
               <Route path='*' element={<PageNotFound />} />
             </Routes>
           </div>

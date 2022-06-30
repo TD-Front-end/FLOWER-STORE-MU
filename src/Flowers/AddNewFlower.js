@@ -28,17 +28,36 @@ class AddNewFlower extends React.Component {
         this.state = { CategoryID: '' };
         this.state = { SupplierID: '' };
 
-        this.handleChange = this.handleChange.bind(this);
+        this.handleName = this.handleName.bind(this);
+        this.handleColor = this.handleColor.bind(this);
+        this.handleImageFlower = this.handleImageFlower.bind(this);
+        this.handleUnit = this.handleUnit.bind(this);
+        this.handlePrice = this.handlePrice.bind(this);
+        this.handleCategoryID = this.handleCategoryID.bind(this);
+        this.handleSupplierID = this.handleSupplierID.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
 
     }
-    handleChange = event => {
+    handleName = event => {
         this.setState({ FlowerName: event.target.value });
+    }
+    handleColor = event => {
         this.setState({ Color: event.target.value });
+    }
+    handleImageFlower = event => {
         this.setState({ imgeFlower: event.target.value });
+    }
+    handleUnit = event => {
         this.setState({ Unit: event.target.value });
+    }
+    handlePrice = event => {
         this.setState({ Price: event.target.value });
+    }
+    handleCategoryID = event => {
         this.setState({ CategoryID: event.target.value });
+        this.setState({ SupplierID: event.target.value });
+    }
+    handleSupplierID = event => {
         this.setState({ SupplierID: event.target.value });
     }
     handleSubmit = event => {
@@ -62,25 +81,25 @@ class AddNewFlower extends React.Component {
     };
 
     render() {
-        const [{ loading, error, category }, dispatch] = useReducer(logger(reducer), {
-            category: [],
-            loading: true,
-            error: '',
-        });
-        //
-        useEffect(() => {
-            const fetchData = async () => {
-                dispatch({ type: 'FETCH_REQUEST' });
-                try {
-                    const result = await axios.get('/api/category');
-                    dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
-                } catch (err) {
-                    dispatch({ type: 'FETCH_FAIL', payload: err.message });
+        // const [{ loading, error, category }, dispatch] = useReducer(logger(reducer), {
+        //     category: [],
+        //     loading: true,
+        //     error: '',
+        // });
+        // //
+        // useEffect(() => {
+        //     const fetchData = async () => {
+        //         dispatch({ type: 'FETCH_REQUEST' });
+        //         try {
+        //             const result = await axios.get('/api/category');
+        //             dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
+        //         } catch (err) {
+        //             dispatch({ type: 'FETCH_FAIL', payload: err.message });
 
-                }
-            };
-            fetchData();
-        }, []);
+        //         }
+        //     };
+        //     fetchData();
+        // }, []);
         return (
             <React.Fragment>
                 <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#insertModal">
@@ -97,25 +116,29 @@ class AddNewFlower extends React.Component {
                                 <div className="modal-body">
                                     <div className="mb-3">
                                         <label htmlFor="FlowerName" className="col-form-label">Tên hoa:</label>
-                                        <input type="text" className="form-control" id="FlowerName" onChange={this.handleChange} />
+                                        <input type="text" className="form-control" id="FlowerName" onChange={this.handleName} />
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="Color" className="col-form-label">Màu hoa:</label>
-                                        <input type="text" className="form-control" id="Color" onChange={this.handleChange} />
+                                        <input type="text" className="form-control" id="Color" onChange={this.handleColor} />
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="imgeFlower" className="col-form-label">Ảnh hoa:</label>
-                                        <input type="text" className="form-control" id="imgeFlower" onChange={this.handleChange} />
+                                        <input type="text" className="form-control" id="imgeFlower" onChange={this.handleImageFlower} />
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="Unit" className="col-form-label">Đơn vị:</label>
-                                        <input type="text" className="form-control" id="Unit" onChange={this.handleChange} />
+                                        <input type="text" className="form-control" id="Unit" onChange={this.handleUnit} />
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="Price" className="col-form-label">Giá hoa:</label>
-                                        <input type="text" className="form-control" id="Price" onChange={this.handleChange} />
+                                        <input type="text" className="form-control" id="Price" onChange={this.handlePrice} />
                                     </div>
-                                    {
+                                    <div className="mb-3">
+                                        <label htmlFor="CategoryID" className="col-form-label">Loại hoa:</label>
+                                        <input type="text" className="form-control" id="CategoryID" onChange={this.handleCategoryID} />
+                                    </div>
+                                    {/* {
                                         category.map((item) => (
                                             <div className="mb-3" key={item.CategoryID}>
                                                 <select value={item.CategoryID}>
@@ -124,10 +147,10 @@ class AddNewFlower extends React.Component {
                                             </div>
                                         ))
 
-                                    }
+                                    } */}
                                     <div className="mb-3">
                                         <label htmlFor="SupplierID " className="col-form-label">Nhà cung cấp:</label>
-                                        <input type="text" className="form-control" id="SupplierID " onChange={this.handleChange} />
+                                        <input type="text" className="form-control" id="SupplierID " onChange={this.handleSupplierID} />
                                     </div>
                                 </div>
                                 <div className="modal-footer">

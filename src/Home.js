@@ -52,10 +52,7 @@ function Home() {
         <strong>Danh sách loại hoa</strong>
       </div>
       <div className="row">
-        <div className="col-xs-12">
-          <a href="/AddNewCategory" classNameName="">Thêm loại hoa</a>
 
-        </div>
       </div><br />
       <div className="flowers">
         {loading ? (
