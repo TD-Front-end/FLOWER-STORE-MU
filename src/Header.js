@@ -15,7 +15,7 @@ const Header = () => {
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item mx-3">
                             {/* <a className="nav-link active" aria-current="page" href="/#">Trang chủ</a> */}
-                            <Link to={'/flower'} className="nav-link active">Trang chủ</Link>
+                            <Link to={'/#'} className="nav-link active">Trang chủ</Link>
                         </li>
                         <li className="nav-item mx-3">
                             <a className="nav-link active" href="/#">Sản phẩm</a>
